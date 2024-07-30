@@ -2,6 +2,8 @@ package com.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +66,7 @@ public class userControllers {
 	}
 
 	@RequestMapping("/checkUser")
-	public String checkCheredentials(@ModelAttribute("u1") userModel u1) {
+	public String checkCheredentials(@ModelAttribute("u1") userModel u1, HttpSession session) {
 		String message ;
 		System.out.println("checkUser");
 		System.out.println("u1 email " + u1.getEmail());
@@ -84,12 +86,39 @@ public class userControllers {
 				return "redirect:/login?message=" + message;
  			}else {
 				message  = "user Login successfully" ; 
+				
 				System.out.println();
+				// Set the session attribute after successful login
+	            session.setAttribute("user", u1.getEmail());
+	            session.setMaxInactiveInterval(30 * 60) ;
+	            return "redirect:/dashboard";
 			}
 		}
-
-		return "redirect:/dashboard?message=" + message;
+		
 
 	}
-
+	
+	@RequestMapping("/dashboard")
+	public String Dashboard(HttpSession session) {
+		 // Retrieve the session attribute "user"
+	    String user = (String) session.getAttribute("user");
+	    
+	    // Log the retrieved user name
+	    System.out.println("User from session: " + user);
+	    
+		if (user == null ) {
+			System.out.println(user);
+			 System.out.println("No user in session, redirecting to login.");
+			return "redirect:/login" ;
+		}
+		
+		return "dashboard" ;
+	}
+	
+	@RequestMapping("/logout")
+	public String Logout(HttpSession session) {
+		session.invalidate() ;
+		return "redirect:/login" ;
+	}
+	
 }
