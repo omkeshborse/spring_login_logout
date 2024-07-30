@@ -14,54 +14,82 @@ import com.model.userModel;
 
 @Controller
 public class userControllers {
-	
+
 	@Autowired
-	userDao ud ;
-	
+	userDao ud;
+
 	@RequestMapping("/hello")
 	public void get() {
 		System.out.println("hello peter parker");
 	}
-	
+
 	@RequestMapping("/register")
 	public String register(@RequestParam(value = "message", required = false) String message, Model model) {
 		model.addAttribute("message", message);
-		return "register" ;
+		return "register";
 	}
-	 
+
 	@RequestMapping("/saveUserInfo")
-	public String saveUserInfo(@ModelAttribute("u1" ) userModel u1) {
-		 String message;
+	public String saveUserInfo(@ModelAttribute("u1") userModel u1) {
+		String message;
 
-		    System.out.println(u1.toString()); 
+		System.out.println(u1.toString());
 
-		    // Check if password and confirm password match
-		    if (u1.getPassword().equals(u1.getConfirm_password())) {
-		        List<userModel> existingUsers = ud.checkUserExists(u1);
+		// Check if password and confirm password match
+		if (u1.getPassword().equals(u1.getConfirm_password())) {
+			List<userModel> existingUsers = ud.checkUserExists(u1);
 
-		        if (existingUsers.isEmpty()) {
-		            // Save user information if not already present
-		            ud.saveInfo(u1);
-		            message = "User registered successfully!";
-		            System.out.println("User registered successfully.");
-		        } else {
-		            // User already exists
-		            message = "User already exists , please login!";
-		            System.out.println("User already exists with email '" + u1.getEmail() + "', please login!");
-		        }
-		    } else {
-		        // Password and confirm password do not match
-		        message = "Password and confirm password do not match.";
-		        System.out.println("Password and confirm password do not match.");
-		    }
+			if (existingUsers.isEmpty()) {
+				// Save user information if not already present
+				ud.saveInfo(u1);
+				message = "User registered successfully!";
+				System.out.println("User registered successfully.");
+			} else {
+				// User already exists
+				message = "User already exists , please login!";
+				System.out.println("User already exists with email '" + u1.getEmail() + "', please login!");
+			}
+		} else {
+			// Password and confirm password do not match
+			message = "Password and confirm password do not match.";
+			System.out.println("Password and confirm password do not match.");
+		}
 
-		    return "redirect:/register?message=" + message;
+		return "redirect:/register?message=" + message;
 	}
-	
+
 	@RequestMapping("/login")
-	public String login()
-	{
-		return "login" ;
+	public String login() {
+		return "login";
 	}
-	
+
+	@RequestMapping("/checkUser")
+	public String checkCheredentials(@ModelAttribute("u1") userModel u1) {
+		String message ;
+		System.out.println("checkUser");
+		System.out.println("u1 email " + u1.getEmail());
+		System.out.println("u1 password" + u1.getPassword());
+		List<userModel> existingUsers = ud.checkUserExists(u1);
+		if (existingUsers.isEmpty()) {
+			message = "New here? Please register to create account";
+			System.out.println("New here? Please register to create account");
+			return "redirect:/register?message=" + message;
+		} else {
+			
+			
+			List<userModel> userWithCorrectCred = 	ud.checkCheredentials(u1) ;
+			if (userWithCorrectCred.isEmpty()) {
+				message = "User password is incorrect" ;
+				System.out.println("User password is incorrect");
+				return "redirect:/login?message=" + message;
+ 			}else {
+				message  = "user Login successfully" ; 
+				System.out.println();
+			}
+		}
+
+		return "redirect:/dashboard?message=" + message;
+
+	}
+
 }

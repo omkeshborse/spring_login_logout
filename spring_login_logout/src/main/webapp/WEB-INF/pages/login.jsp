@@ -264,7 +264,7 @@ text-decoration: none ;
 					<label>Password</label> <input type="password" name="password" class="input">
 				</div>
 				<div class="inputfield">
-					<input type="submit" value="Register" class="btn">
+					<input type="submit" value="login" class="btn">
 				</div>
 			</div>
 

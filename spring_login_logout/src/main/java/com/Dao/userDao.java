@@ -49,6 +49,30 @@ public class userDao {
 				return ur;
 			}}) ;
 	}
+
+
+	public List<userModel> checkCheredentials(userModel u1) {
+		// TODO Auto-generated method stub
+
+		String selectQueryByEmailPassword = " SELECT * FROM users WHERE email = '"+u1.getEmail()+"' and password = '"+u1.getPassword()+"' " ;
+		return t1.query(selectQueryByEmailPassword, new RowMapper<userModel>() {
+
+			@Override
+			public userModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				// TODO Auto-generated method stub
+				
+				userModel ur = new userModel() ;
+				ur.setId(rs.getInt(1));
+				ur.setFirst_name(rs.getString(2));
+				ur.setLast_name(rs.getString(3));
+				ur.setPassword(rs.getString(4));
+				ur.setGender(rs.getString(5));
+				ur.setEmail(rs.getString(6));
+				ur.setPhone_number(rs.getString(7));
+				ur.setPostal_code(rs.getString(8));
+				return ur;
+			}}) ;
+	}
 	
 	
 
