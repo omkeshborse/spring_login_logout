@@ -252,30 +252,33 @@ text-decoration: none ;
 </script>
 </head>
 <body onload="showPopup('${message}')">
-	<form action="checkUser" method="post">
+	<form action="resetPassword" method="post">
 		<div class="wrapper">
-			<div class="title">logIn Form</div>
+			<div class="title">Reset Password</div>
 			<div class="form">
+				<div class="inputfield">
+					<label>First Name</label> 
+					<input type="text" name="first_name"	class="input">
+				</div>
+				<div class="inputfield">
+					<label>Last Name</label> 
+					<input type="text" name="last_name"	class="input">
+				</div>
 				<div class="inputfield">
 					<label>Email Address</label> 
 					<input type="text" name="email"	class="input">
 				</div>
 				<div class="inputfield">
-					<label>Password</label> <input type="password" name="password" class="input">
+					<label>Reset Password</label> 
+					<input type="text" name="password"	class="input">
 				</div>
+				
 				<div class="inputfield">
-					<input type="submit" value="login" class="btn">
+					<input type="submit" value="Reset" class="btn">
 				</div>
 			</div>
 
-			<div class="loginBtn">
-				 New here? Please 
-       			 <a href="register">register</a> to create account.
-			</div>
-			<div class="loginBtn">
-				
-       			 <a href="reset"> Reset Password OR  Forgot Password</a> .
-			</div>
+			
 		</div>
 
 

@@ -73,6 +73,14 @@ public class userDao {
 				return ur;
 			}}) ;
 	}
+
+
+	public int  updatePassword(userModel u1) {
+		// TODO Auto-generated method stub
+		String  updateQuery = " UPDATE users SET password = '"+u1.getPassword()+"' WHERE first_name = '"+u1.getFirst_name()+"' and last_name = '"+u1.getLast_name()+"' and email = '"+u1.getEmail()+"' " ;
+		
+		return t1.update(updateQuery) ;
+	}
 	
 	
 

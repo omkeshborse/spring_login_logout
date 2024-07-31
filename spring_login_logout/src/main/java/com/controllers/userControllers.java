@@ -121,4 +121,16 @@ public class userControllers {
 		return "redirect:/login" ;
 	}
 	
+	@RequestMapping("/reset")
+	public String reset() {
+		return "resetPassword" ;
+	}
+	@RequestMapping("/resetPassword")
+	public String resetPassword(@ModelAttribute("u1") userModel u1 )
+	{	System.out.println(u1.getEmail());
+		
+		ud.updatePassword(u1) ;
+		return "redirect:/login" ;
+	}
+	
 }
